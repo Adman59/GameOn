@@ -7,39 +7,73 @@ function editNav() {
   }
 }
 
-//---------------DOM ELEMENTS-----------------//
+// Créer une fonction main puis appeler chaque autre fonction, creer une condition
 
-const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
-const closeIconModal = document.querySelectorAll('#closeIcon');
+function main() {
+  const modalBtn = document.querySelectorAll(".modal-btn");
+  const closeIconModal = document.querySelectorAll('#closeIcon');
 
-const inputFirstName = document.getElementById('first_name');
-const inputLastName = document.getElementById('last_name');
-const inputEmail = document.getElementById('email');
-const inputBirthdate = document.getElementById('birthdate');
-const inputQuantityTournament = document.getElementById('quantity_tournament');
+  // OPEN modal event
+  modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-const inputsForm = document.querySelectorAll('input[type="text"], input[type="email"], input[type="number"], input[type="radio"]');
+  // CLOSE modal event
+  closeIconModal.forEach((btn) => btn.addEventListener("click", closeModal));
 
-//---------------EVENTS-----------------//
+  validModal();
+}
+main();
 
-// OPEN modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+function validModal() {
+  const formModal = document.querySelectorAll(".formData");
 
-// CLOSE modal event
-closeIconModal.forEach((btn) => btn.addEventListener("click", closeModal));
+  if (checkForm(formModal)) {
+    console.log("ok");
+  } else {
+    console.log("c'est pas bon");
+  }
+}
 
+function checkForm(formModal) {
+  console.log(formModal);
+  let controlTest = true;
+  // Pour determiner sur quel input on travaille :
+  formModal.forEach((input) => {
+    console.log(input);
+    input.addEventListener("input", (e) => {
+      switch (e.target.id) {
+        case "first_name":
+          firstNameChecker(e.target.value);
+          break;
+        case "last_name":
+          lastNameChecker(e.target.value)
+          break;
+        case "email":
+          emailChecker(e.target.value)
+          break;
+        default:
+          null;
+      }
+    });
+  });
+
+  if (controlTest) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 //---------------FONCTIONS-----------------//
 
 // OPEN modal form
 function launchModal() {
+  const modalbg = document.querySelector(".bground");
   modalbg.style.display = "block";
 }
 
 // CLOSE modal form
 function closeModal() {
+  const modalbg = document.querySelector(".bground");
   modalbg.style.display = "none";
 }
 
@@ -48,14 +82,10 @@ function closeModal() {
 function firstNameChecker(value) {
 
   const errorDescription = document.getElementById('errorDesc');
-  let firstNameRegex =  /^[a-zA-Z]+ [a-zA-Z]+$/;
+  let firstNameRegex = /^[a-zA-Z-]+$/;
 
-  if (value.length < 2) {
-    //ajouter un p en dessous de l'input avec une phrase expliquant pourquoi ce n'est pas ok
-    errorDescription.textContent = "Le champ prénom doit comporter au minimum 2 caractères";
-    inputFirstName.style.border = "2px solid #e54858";
-  } else if (value.match(firstNameRegex)) {
-    errorDescription.textContent = "Veuillez renseigner un prénom valide";
+  if (!value.match(firstNameRegex) || value.length < 2) {
+    errorDescription.textContent = "Le champ prénom doit comporter au minimum 2 caractères ou le prénom n'est pas valide.";
     inputFirstName.style.border = "2px solid #e54858";
   } else {
     errorDescription.remove();
@@ -90,7 +120,7 @@ function citiesChecker() {
 // Conditions checkbox checker (la case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée)
 
 function checkboxConditionsChecker() {
-  
+
 }
 
 
@@ -99,24 +129,3 @@ function checkboxConditionsChecker() {
 function checkError() {
 
 }
-
-// Pour determiner sur quel input on travaille :
-
-inputsForm.forEach((input) => {
-  input.addEventListener("input", (e) => {
-    switch (e.target.id) {
-      case "first_name":
-        firstNameChecker(e.target.value);
-        break;
-      case "last_name":
-        lastNameChecker(e.target.value)
-        break;
-      case "email":
-        emailChecker(e.target.value)
-        break;
-      default:
-        null;
-    }
-  });
-});
-
