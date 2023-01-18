@@ -54,38 +54,41 @@
       <div class="content">
         <span class="close" id="closeIcon"></span>
         <div class="modal-body">
-          <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
+          <form name="reserve" class="formulaire" action="index.html" method="get" onsubmit="return validate();">
 
             <!--Champ prénom-->
-            <div class="formData">
+            <div class="formData" id="firstNameData"
+              data-error="Le champ prénom doit comporter au minimum 2 caractères et être un prénom valide.">
               <label for="first_name">Prénom</label><br />
-              <input class="text-control" type="text" id="first_name" name="first" minlength="2" /><br />
-              <!-- <span class="error_description" id="errorDesc"></span> -->
+              <input class="text-control" type="text" id="first_name" name="first" minlength="2" required /><br />
             </div>
 
             <!--Champ nom-->
-            <div class="formData">
+            <div class="formData" id="lastNameData"
+              data-error="Le champ nom doit comporter au minimum 2 caractères et être un nom valide.">
               <label for="last_name">Nom</label><br />
-              <input class="text-control" type="text" id="last_name" name="last" /><br />
+              <input class="text-control" type="text" id="last_name" name="last" required /><br />
             </div>
 
             <!--Champ e-mail-->
-            <div class="formData">
+            <div class="formData" id="emailData" data-error="Veuillez saisir une adresse e-mail valide.">
               <label for="email">E-mail</label><br />
-              <input class="text-control" type="email" id="email" name="email" /><br />
+              <input class="text-control" type="email" id="email" name="email" required /><br />
             </div>
 
             <!--Champ date de naissance-->
-            <div class="formData">
+            <div class="formData" id="birthdayData"
+              data-error="Vous devez être majeur pour vous inscrire et la date doit être au format JJ/MM/AAAA">
               <label for="birthdate">Date de naissance</label><br />
-              <input class="text-control" type="date" id="birthdate" name="birthdate" /><br />
+              <input class="text-control" type="date" id="birthdate" name="birthdate" min="1950-01-01" required /><br />
             </div>
 
             <!--Champ nombre de participation tournoi-->
-            <div class="formData">
-              <label for="quantity_tournament">À combien de tournois GameOn avez-vous déjà participé
+            <div class="formData" id="tournamentData" data-error="Veuillez saisir un nombre entre 0 et 20">
+              <label for=" quantity_tournament">À combien de tournois GameOn avez-vous déjà participé
                 ?</label><br />
-              <input type="number" class="text-control" id="quantity_tournament" name="quantity" min="0" max="99" />
+              <input type="number" class="text-control" id="quantity_tournament" name="quantity" min="0" max="99"
+                required />
             </div>
 
             <!--Champ choix du tournoi-->
@@ -93,7 +96,7 @@
               A quel tournoi souhaitez-vous participer cette année ?
             </p>
 
-            <div class="formData">
+            <div class="formData" id="cityData" data-error="Veuillez choisir un tournoi">
               <input class="checkbox-input" type="radio" id="location1" name="location" value="New York" />
               <label class="checkbox-label" for="location1">
                 <span class="checkbox-icon"></span>
@@ -121,7 +124,7 @@
             </div>
 
             <!--Checkbox conditions d'utilisations + alert-->
-            <div class="formData">
+            <div class="formData" id="checkboxData" data-error="Vous devez accepter les conditions d'utilisations">
               <input class="checkbox-input" type="checkbox" id="checkbox1" checked />
               <label class="checkbox2-label" for="checkbox1" required>
                 <span class="checkbox-icon"></span>

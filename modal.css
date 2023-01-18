@@ -208,6 +208,11 @@ input {
   font-size: 20px;
   height: 48px;
 }
+
+/* .formData {
+  margin-bottom: 2rem;
+} */
+
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -215,17 +220,26 @@ input {
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
-  text-align: right;
-  line-height: 0.3;
+  text-align: left;
+  /* line-height: 0.3; */
   opacity: 0;
   transition: 0.3s;
 }
+
 .formData[data-error-visible="true"]::after {
   opacity: 1;
 }
+
+.formData[data-error-visible="false"] .text-control {
+  border: 2px solid #279e7a;
+}
+
+
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
+
+
 /* 
 input[data-error]::after {
     content: attr(data-error);
@@ -233,18 +247,6 @@ input[data-error]::after {
     color: red;
 } */
 
-/***** error ****/
-
-.error_description {
-  font-size: 0.4em;
-  color: #e54858;
-  display: block;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  text-align: right;
-  line-height: 0.3;
-  transition: 0.3s;
-}
 
 .checkbox-label,
 .checkbox2-label {
