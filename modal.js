@@ -25,50 +25,51 @@ function main() {
 main();
 
 function validModal() {
-  const formModal = document.querySelectorAll(".formulaire");
+  const submitForm = document.getElementById("submitForm");
 
-  let btnsendmodal = document.querySelector("#btnsendmodal");
+  submitForm.addEventListener('click', (e) => {
+    e.preventDefault();
 
-  btnsendmodal.addEventListener("click", function (e) {
-    e.preventDefault;
-    if (checkForm(formModal)) {
+
+    if (checkFormValid(formModal)) {
       alert("merci d'avoir remplis le formulaire")
     } else {
       console.log("c'est pas bon");
     }
+
   })
-}
+};
 
 
 
-function checkForm(formModal) {
 
-  let controlTest = true;
+
+function checkFormValid(formModal) {
   // Pour determiner sur quel input on travaille :
   formModal.forEach((input) => {
     // console.log(input);
     input.addEventListener("input", (e) => {
       switch (e.target.id) {
         case "first_name":
-          controlTest = firstNameChecker(e.target.value);
+          firstNameChecker(e.target.value);
           break;
         case "last_name":
-          controlTest = lastNameChecker(e.target.value)
+          lastNameChecker(e.target.value)
           break;
         case "email":
-          controlTest = emailChecker(e.target.value)
+          emailChecker(e.target.value)
           break;
         case "birthdate":
-          controlTest = birthdayChecker(e.target.value)
+          birthdayChecker(e.target.value)
           break;
         case "quantity_tournament":
-          controlTest = tournamentChecker(e.target.value)
+          tournamentChecker(e.target.value)
           break;
-        case "cityData":
-          controlTest = cityChecker(e.target.value)
+        case "location1":
+          cityChecker(e.target.value)
           break;
-        case "checkboxData":
-          controlTest = checkboxChecker(e.target.value)
+        case "checkbox1":
+          checkboxChecker(e.target.value)
           break;
         default:
           null;
@@ -76,12 +77,6 @@ function checkForm(formModal) {
     });
   });
 
-  console.log(controlTest)
-  if (controlTest) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
 //---------------FONCTIONS-----------------//
@@ -107,9 +102,10 @@ function firstNameChecker(value) {
   const firstNameForm = document.getElementById('firstNameData');
   let firstNameRegex = /^[a-zA-Z-]+$/;
 
+
   if (!value.match(firstNameRegex) || value.length < 2) {
     firstNameForm.setAttribute('data-error-visible', 'true');
-    return false
+
   } else {
     firstNameForm.setAttribute('data-error-visible', 'false');
   }
@@ -125,9 +121,10 @@ function lastNameChecker(value) {
   const lastNameForm = document.getElementById('lastNameData');
   let firstNameRegex = /^[a-zA-Z-]+$/;
 
+
   if (!value.match(firstNameRegex) || value.length < 2) {
     lastNameForm.setAttribute('data-error-visible', 'true');
-    return false
+
   } else {
     lastNameForm.setAttribute('data-error-visible', 'false');
   }
@@ -143,9 +140,10 @@ function emailChecker(value) {
   const emailForm = document.getElementById('emailData');
   let emailRegex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
 
+
   if (!value.match(emailRegex)) {
     emailForm.setAttribute('data-error-visible', 'true');
-    return false
+
   } else {
     emailForm.setAttribute('data-error-visible', 'false');
   }
@@ -168,7 +166,7 @@ function birthdayChecker(value) {
 
   if (!value.match(birthdayRegex) || (yearDate - dataDate.getFullYear() < 18)) {
     birthdayForm.setAttribute('data-error-visible', 'true');
-    return false
+
   } else {
     birthdayForm.setAttribute('data-error-visible', 'false');
   }
@@ -186,7 +184,7 @@ function tournamentChecker(value) {
 
   if (value === "" || value >= 20) {
     tournamentForm.setAttribute('data-error-visible', 'true');
-    return false
+
   } else {
     tournamentForm.setAttribute('data-error-visible', 'false');
   }
@@ -203,10 +201,10 @@ function cityChecker() {
   const cityForm = document.getElementById('cityData');
 
   if (radioCheck !== null) {
-    cityForm.setAttribute('data-error-visible', 'true');
-    return false
-  } else {
     cityForm.setAttribute('data-error-visible', 'false');
+
+  } else {
+    cityForm.setAttribute('data-error-visible', 'true');
   }
 }
 
@@ -225,7 +223,7 @@ function checkboxChecker() {
 
   } else {
     checkboxForm.setAttribute('data-error-visible', 'true');
-    return false
+    console.log('mksjdvnmkjn dv')
   }
 
 }
