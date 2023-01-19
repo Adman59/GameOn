@@ -27,18 +27,22 @@ main();
 function validModal() {
   const formModal = document.querySelectorAll(".formulaire");
 
-  if (checkForm(formModal)) {
-    firstNameChecker();
-    console.log("ok");
-  } else {
-    console.log("c'est pas bon");
-  }
+  let btnsendmodal = document.querySelector("#btnsendmodal");
+
+  btnsendmodal.addEventListener("click", function (e) {
+    e.preventDefault;
+    if (checkForm(formModal)) {
+      alert("merci d'avoir remplis le formulaire")
+    } else {
+      console.log("c'est pas bon");
+    }
+  })
 }
 
 
 
 function checkForm(formModal) {
-  console.log(formModal);
+
   let controlTest = true;
   // Pour determiner sur quel input on travaille :
   formModal.forEach((input) => {
@@ -46,25 +50,25 @@ function checkForm(formModal) {
     input.addEventListener("input", (e) => {
       switch (e.target.id) {
         case "first_name":
-          firstNameChecker(e.target.value);
+          controlTest = firstNameChecker(e.target.value);
           break;
         case "last_name":
-          lastNameChecker(e.target.value)
+          controlTest = lastNameChecker(e.target.value)
           break;
         case "email":
-          emailChecker(e.target.value)
+          controlTest = emailChecker(e.target.value)
           break;
         case "birthdate":
-          birthdayChecker(e.target.value)
+          controlTest = birthdayChecker(e.target.value)
           break;
         case "quantity_tournament":
-          tournamentChecker(e.target.value)
+          controlTest = tournamentChecker(e.target.value)
           break;
-        case "location1 && location2":
-          cityChecker(e.target.value)
+        case "cityData":
+          controlTest = cityChecker(e.target.value)
           break;
-        case "checkbox1":
-          checkboxChecker(e.target.value)
+        case "checkboxData":
+          controlTest = checkboxChecker(e.target.value)
           break;
         default:
           null;
@@ -72,6 +76,7 @@ function checkForm(formModal) {
     });
   });
 
+  console.log(controlTest)
   if (controlTest) {
     return true;
   } else {
@@ -93,6 +98,7 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
+
 //--------------//
 // First name checker (minimum de 2 caractères / n'est pas vide)
 //--------------//
@@ -103,6 +109,7 @@ function firstNameChecker(value) {
 
   if (!value.match(firstNameRegex) || value.length < 2) {
     firstNameForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     firstNameForm.setAttribute('data-error-visible', 'false');
   }
@@ -120,6 +127,7 @@ function lastNameChecker(value) {
 
   if (!value.match(firstNameRegex) || value.length < 2) {
     lastNameForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     lastNameForm.setAttribute('data-error-visible', 'false');
   }
@@ -137,6 +145,7 @@ function emailChecker(value) {
 
   if (!value.match(emailRegex)) {
     emailForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     emailForm.setAttribute('data-error-visible', 'false');
   }
@@ -159,6 +168,7 @@ function birthdayChecker(value) {
 
   if (!value.match(birthdayRegex) || (yearDate - dataDate.getFullYear() < 18)) {
     birthdayForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     birthdayForm.setAttribute('data-error-visible', 'false');
   }
@@ -176,6 +186,7 @@ function tournamentChecker(value) {
 
   if (value === "" || value >= 20) {
     tournamentForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     tournamentForm.setAttribute('data-error-visible', 'false');
   }
@@ -193,6 +204,7 @@ function cityChecker() {
 
   if (radioCheck !== null) {
     cityForm.setAttribute('data-error-visible', 'true');
+    return false
   } else {
     cityForm.setAttribute('data-error-visible', 'false');
   }
@@ -210,24 +222,10 @@ function checkboxChecker() {
 
   if (conditionsCheck.checked) {
     checkboxForm.setAttribute('data-error-visible', 'false');
+
   } else {
     checkboxForm.setAttribute('data-error-visible', 'true');
+    return false
   }
 
 }
-
-let conditionsCheck = document.getElementById('checkbox1');
-const checkboxForm = document.getElementById('checkboxForm');
-console.log(conditionsCheck);
-
-
-//--------------//
-// Si un champ n'est pas bon alors on appele cette fonction :
-//--------------//
-
-
-function checkError() {
-
-}
-
-// voir objet test ( a la place du switch)
