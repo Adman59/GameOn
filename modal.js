@@ -19,64 +19,55 @@ function main() {
   // CLOSE modal event
   closeIconModal.forEach((btn) => btn.addEventListener("click", closeModal));
 
+  firstNameChecker();
+  lastNameChecker();
+  emailChecker();
+  birthdayChecker();
+  tournamentChecker();
+
+  checkboxChecker();
+
   validModal();
 }
 
 main();
 
+
+
 function validModal() {
-  const submitForm = document.getElementById("submitForm");
+  const submitForm = document.getElementById('submitForm');
 
   submitForm.addEventListener('click', (e) => {
     e.preventDefault();
-
+    const formModal = document.querySelectorAll(".formData");
 
     if (checkFormValid(formModal)) {
-      alert("merci d'avoir remplis le formulaire")
+      console.log("ok");
+      alert('Merci, votre demande de réservation a bien été prise en compte')
     } else {
       console.log("c'est pas bon");
     }
-
   })
 };
 
 
-
-
-
 function checkFormValid(formModal) {
   // Pour determiner sur quel input on travaille :
-  formModal.forEach((input) => {
-    // console.log(input);
-    input.addEventListener("input", (e) => {
-      switch (e.target.id) {
-        case "first_name":
-          firstNameChecker(e.target.value);
-          break;
-        case "last_name":
-          lastNameChecker(e.target.value)
-          break;
-        case "email":
-          emailChecker(e.target.value)
-          break;
-        case "birthdate":
-          birthdayChecker(e.target.value)
-          break;
-        case "quantity_tournament":
-          tournamentChecker(e.target.value)
-          break;
-        case "location1":
-          cityChecker(e.target.value)
-          break;
-        case "checkbox1":
-          checkboxChecker(e.target.value)
-          break;
-        default:
-          null;
-      }
-    });
-  });
+  let validForm = true;
 
+  formModal.forEach((input) => {
+    switch (input.id) {
+      case "cityData":
+        validForm = cityChecker(input.value) && validForm;
+        break;
+      case "checkboxData":
+        validForm = checkboxChecker(input.value) && validForm;
+        break;
+      default:
+        null;
+    }
+  });
+  return validForm;
 }
 
 //---------------FONCTIONS-----------------//
@@ -98,18 +89,27 @@ function closeModal() {
 // First name checker (minimum de 2 caractères / n'est pas vide)
 //--------------//
 
-function firstNameChecker(value) {
+
+
+
+
+function firstNameChecker() {
   const firstNameForm = document.getElementById('firstNameData');
   let firstNameRegex = /^[a-zA-Z-]+$/;
 
+  firstNameForm.addEventListener('input', (e) => {
+    console.log(e.target.value);
 
-  if (!value.match(firstNameRegex) || value.length < 2) {
-    firstNameForm.setAttribute('data-error-visible', 'true');
-
-  } else {
-    firstNameForm.setAttribute('data-error-visible', 'false');
-  }
+    if (!e.target.value.match(firstNameRegex) || e.target.value.length < 2) {
+      firstNameForm.setAttribute('data-error-visible', 'true');
+      return false;
+    } else {
+      firstNameForm.removeAttribute('data-error-visible');
+      return true;
+    }
+  })
 }
+
 
 
 //--------------//
@@ -117,17 +117,21 @@ function firstNameChecker(value) {
 //--------------//
 
 
-function lastNameChecker(value) {
+function lastNameChecker() {
   const lastNameForm = document.getElementById('lastNameData');
-  let firstNameRegex = /^[a-zA-Z-]+$/;
+  let lastNameRegex = /^[a-zA-Z-]+$/;
 
+  lastNameForm.addEventListener('input', (e) => {
+    console.log(e.target.value);
 
-  if (!value.match(firstNameRegex) || value.length < 2) {
-    lastNameForm.setAttribute('data-error-visible', 'true');
-
-  } else {
-    lastNameForm.setAttribute('data-error-visible', 'false');
-  }
+    if (!e.target.value.match(lastNameRegex) || e.target.value.length < 2) {
+      lastNameForm.setAttribute('data-error-visible', 'true');
+      return false;
+    } else {
+      lastNameForm.removeAttribute('data-error-visible', 'false');
+      return true;
+    }
+  })
 }
 
 
@@ -136,17 +140,21 @@ function lastNameChecker(value) {
 //--------------//
 
 
-function emailChecker(value) {
+function emailChecker() {
   const emailForm = document.getElementById('emailData');
   let emailRegex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
 
+  emailForm.addEventListener('input', (e) => {
+    console.log(e.target.value);
 
-  if (!value.match(emailRegex)) {
-    emailForm.setAttribute('data-error-visible', 'true');
-
-  } else {
-    emailForm.setAttribute('data-error-visible', 'false');
-  }
+    if (!e.target.value.match(emailRegex)) {
+      emailForm.setAttribute('data-error-visible', 'true');
+      return false;
+    } else {
+      emailForm.setAttribute('data-error-visible', 'false');
+      return true;
+    }
+  })
 }
 
 
@@ -155,41 +163,47 @@ function emailChecker(value) {
 //--------------//
 
 
-function birthdayChecker(value) {
-  let dateOfTheDay = new Date(); //Date du jour
-  let yearDate = dateOfTheDay.getFullYear(); //Année en cours
-  let dataDate = new Date(value);
+
+function birthdayChecker() {
+  const birthdayForm = document.getElementById('birthdayData');
 
   let birthdayRegex = /^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/;
   // Cette regex vérifie que le nombre de caractères correspond à une date au format "AAAA-MM-JJ" où AAAA est une année comprise entre 1900 et 2099, MM est un mois de 01 à 12, et JJ est un jour de 01 à 31
-  const birthdayForm = document.getElementById('birthdayData');
 
-  if (!value.match(birthdayRegex) || (yearDate - dataDate.getFullYear() < 18)) {
-    birthdayForm.setAttribute('data-error-visible', 'true');
+  birthdayForm.addEventListener('input', (e) => {
+    console.log(e.target.value);
 
-  } else {
-    birthdayForm.setAttribute('data-error-visible', 'false');
-  }
-
+    if (!e.target.value.match(birthdayRegex)) {
+      birthdayForm.setAttribute('data-error-visible', 'true');
+      return false;
+    } else {
+      birthdayForm.setAttribute('data-error-visible', 'false');
+      return true;
+    }
+  })
 }
-
 
 //--------------//
 // Tournament checker (une valeur numérique est saisie)
 //--------------//
 
 
-function tournamentChecker(value) {
+
+function tournamentChecker() {
   const tournamentForm = document.getElementById('tournamentData');
 
-  if (value === "" || value >= 20) {
-    tournamentForm.setAttribute('data-error-visible', 'true');
+  tournamentForm.addEventListener('input', (e) => {
+    console.log(e.target.value);
 
-  } else {
-    tournamentForm.setAttribute('data-error-visible', 'false');
-  }
+    if (e.target.value === "" || e.target.value >= 20) {
+      tournamentForm.setAttribute('data-error-visible', 'true');
+      return false;
+    } else {
+      tournamentForm.setAttribute('data-error-visible', 'false');
+      return true;
+    }
+  })
 }
-
 
 //--------------//
 // Cities radio checker (un bouton radio est selectionné)
@@ -202,9 +216,10 @@ function cityChecker() {
 
   if (radioCheck !== null) {
     cityForm.setAttribute('data-error-visible', 'false');
-
+    return true;
   } else {
     cityForm.setAttribute('data-error-visible', 'true');
+    return false;
   }
 }
 
@@ -214,16 +229,18 @@ function cityChecker() {
 //--------------//
 
 
+
 function checkboxChecker() {
   let conditionsCheck = document.getElementById('checkbox1');
   const checkboxForm = document.getElementById('checkboxData');
 
   if (conditionsCheck.checked) {
     checkboxForm.setAttribute('data-error-visible', 'false');
+    return true;
 
   } else {
     checkboxForm.setAttribute('data-error-visible', 'true');
-    console.log('mksjdvnmkjn dv')
+    return false;
   }
 
 }
