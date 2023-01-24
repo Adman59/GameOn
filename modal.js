@@ -26,6 +26,7 @@ main();
 
 function validModal() {
   const submitForm = document.getElementById('submitForm');
+  const formValid = document.getElementById("validBox");
 
   submitForm.addEventListener('click', (e) => {
     e.preventDefault();
@@ -33,7 +34,8 @@ function validModal() {
 
     if (checkFormValid(formModal)) {
       console.log("ok");
-      alert('Merci, votre demande de réservation a bien été prise en compte')
+      formValid.style.display = "block";
+      // alert('Merci, votre demande de réservation a bien été prise en compte')
     } else {
       console.log("c'est pas bon");
     }
@@ -89,6 +91,20 @@ function launchModal() {
 // CLOSE modal form
 function closeModal() {
   const modalbg = document.querySelector(".bground");
+  modalbg.style.display = "none";
+  formValid.style.display = "none";
+}
+
+// CLOSE modal form validBox
+const btnCloseModalFormValid = document.querySelector(".btn__closeModal");
+btnCloseModalFormValid.addEventListener("click", closeModalFormValid);
+
+
+function closeModalFormValid() {
+  const formValid = document.getElementById("validBox");
+  const modalbg = document.querySelector(".bground");
+
+  formValid.style.display = "none";
   modalbg.style.display = "none";
 }
 
