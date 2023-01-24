@@ -19,20 +19,10 @@ function main() {
   // CLOSE modal event
   closeIconModal.forEach((btn) => btn.addEventListener("click", closeModal));
 
-  firstNameChecker();
-  lastNameChecker();
-  emailChecker();
-  birthdayChecker();
-  tournamentChecker();
-
-  checkboxChecker();
-
   validModal();
 }
 
 main();
-
-
 
 function validModal() {
   const submitForm = document.getElementById('submitForm');
@@ -50,6 +40,7 @@ function validModal() {
   })
 };
 
+/*************************/
 
 function checkFormValid(formModal) {
   // Pour determiner sur quel input on travaille :
@@ -57,6 +48,21 @@ function checkFormValid(formModal) {
 
   formModal.forEach((input) => {
     switch (input.id) {
+      case "firstNameData":
+        validForm = firstNameChecker(input.value) && validForm;
+        break;
+      case "lastNameData":
+        validForm = lastNameChecker(input.value) && validForm;
+        break;
+      case "emailData":
+        validForm = emailChecker(input.value) && validForm;
+        break;
+      case "birthdayData":
+        validForm = birthdayChecker(input.value) && validForm;
+        break;
+      case "tournamentData":
+        validForm = tournamentChecker(input.value) && validForm;
+        break;
       case "cityData":
         validForm = cityChecker(input.value) && validForm;
         break;
@@ -69,6 +75,8 @@ function checkFormValid(formModal) {
   });
   return validForm;
 }
+
+
 
 //---------------FONCTIONS-----------------//
 
@@ -91,23 +99,18 @@ function closeModal() {
 
 
 
-
-
 function firstNameChecker() {
   const firstNameForm = document.getElementById('firstNameData');
-  let firstNameRegex = /^[a-zA-Z-]+$/;
+  const firstName = document.getElementById('first_name');
+  let firstNameRegex = new RegExp(/^[a-zA-Z-]+$/);
 
-  firstNameForm.addEventListener('input', (e) => {
-    console.log(e.target.value);
-
-    if (!e.target.value.match(firstNameRegex) || e.target.value.length < 2) {
-      firstNameForm.setAttribute('data-error-visible', 'true');
-      return false;
-    } else {
-      firstNameForm.removeAttribute('data-error-visible');
-      return true;
-    }
-  })
+  if (!firstName.value.match(firstNameRegex) || first_name.value.length < 2) {
+    firstNameForm.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    firstNameForm.setAttribute('data-error-visible', 'false');
+    return true;
+  }
 }
 
 
@@ -119,19 +122,16 @@ function firstNameChecker() {
 
 function lastNameChecker() {
   const lastNameForm = document.getElementById('lastNameData');
-  let lastNameRegex = /^[a-zA-Z-]+$/;
+  const lastName = document.getElementById('last_name');
+  let lastNameRegex = new RegExp(/^[a-zA-Z-]+$/);
 
-  lastNameForm.addEventListener('input', (e) => {
-    console.log(e.target.value);
-
-    if (!e.target.value.match(lastNameRegex) || e.target.value.length < 2) {
-      lastNameForm.setAttribute('data-error-visible', 'true');
-      return false;
-    } else {
-      lastNameForm.removeAttribute('data-error-visible', 'false');
-      return true;
-    }
-  })
+  if (!lastName.value.match(lastNameRegex) || last_name.value.length < 2) {
+    lastNameForm.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    lastNameForm.setAttribute('data-error-visible', 'false');
+    return true;
+  }
 }
 
 
@@ -142,19 +142,16 @@ function lastNameChecker() {
 
 function emailChecker() {
   const emailForm = document.getElementById('emailData');
+  const email = document.getElementById('email');
   let emailRegex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
 
-  emailForm.addEventListener('input', (e) => {
-    console.log(e.target.value);
-
-    if (!e.target.value.match(emailRegex)) {
-      emailForm.setAttribute('data-error-visible', 'true');
-      return false;
-    } else {
-      emailForm.setAttribute('data-error-visible', 'false');
-      return true;
-    }
-  })
+  if (!email.value.match(emailRegex)) {
+    emailForm.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    emailForm.setAttribute('data-error-visible', 'false');
+    return true;
+  }
 }
 
 
@@ -163,47 +160,40 @@ function emailChecker() {
 //--------------//
 
 
-
 function birthdayChecker() {
   const birthdayForm = document.getElementById('birthdayData');
-
+  const birthdate = document.getElementById('birthdate');
   let birthdayRegex = /^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/;
   // Cette regex vérifie que le nombre de caractères correspond à une date au format "AAAA-MM-JJ" où AAAA est une année comprise entre 1900 et 2099, MM est un mois de 01 à 12, et JJ est un jour de 01 à 31
 
-  birthdayForm.addEventListener('input', (e) => {
-    console.log(e.target.value);
-
-    if (!e.target.value.match(birthdayRegex)) {
-      birthdayForm.setAttribute('data-error-visible', 'true');
-      return false;
-    } else {
-      birthdayForm.setAttribute('data-error-visible', 'false');
-      return true;
-    }
-  })
+  if (!birthdate.value.match(birthdayRegex)) {
+    birthdayForm.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    birthdayForm.setAttribute('data-error-visible', 'false');
+    return true;
+  }
 }
+
 
 //--------------//
 // Tournament checker (une valeur numérique est saisie)
 //--------------//
 
 
-
 function tournamentChecker() {
   const tournamentForm = document.getElementById('tournamentData');
+  const quantityTournament = document.getElementById('quantity_tournament');
 
-  tournamentForm.addEventListener('input', (e) => {
-    console.log(e.target.value);
-
-    if (e.target.value === "" || e.target.value >= 20) {
-      tournamentForm.setAttribute('data-error-visible', 'true');
-      return false;
-    } else {
-      tournamentForm.setAttribute('data-error-visible', 'false');
-      return true;
-    }
-  })
+  if (quantityTournament.value === "" || quantityTournament.value >= 20) {
+    tournamentForm.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    tournamentForm.setAttribute('data-error-visible', 'false');
+    return true;
+  }
 }
+
 
 //--------------//
 // Cities radio checker (un bouton radio est selectionné)
@@ -227,7 +217,6 @@ function cityChecker() {
 //--------------//
 // Conditions checkbox checker (la case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée)
 //--------------//
-
 
 
 function checkboxChecker() {
