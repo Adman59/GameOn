@@ -91,6 +91,7 @@ function launchModal() {
 // CLOSE modal form
 function closeModal() {
   const modalbg = document.querySelector(".bground");
+  const formValid = document.getElementById("validBox");
   modalbg.style.display = "none";
   formValid.style.display = "none";
 }
